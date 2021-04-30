@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="content">
+		<p:messages id="messages">
+			<p:autoUpdate />
+		</p:messages>
+		<h:form>
+			<p:card class="form-card">
+				<f:facet name="title">
+		       Cadastro de Usuário
+		    </f:facet>
+				<div class="p-field p-grid">
+					<h:outputLabel for="nome" class="p-col-fixed" style="width:100px"
+						value="Nome" />
+					<div class="p-col">
+						<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
+							required="true" requiredMessage="O campo nome é obrigatório">
+							<f:ajax event="blur" render="messages" />
+						</p:inputText>
+
+					</div>
+				</div>
+				<div class="p-field p-grid">
+					<label for="Nascimento" class="p-col-fixed" style="width: 100px">Data
+						Nascimento</label>
+					<div class="p-col">
+						<p:calendar id="date" value="#{usuarioBean.usuario.nascimento}"
+							yearRange="-80:c+0" navigator="true" required="true"
+							requiredMessage="A data de nascimento é obrigatória"
+							style="width: 100px">
+							<f:ajax event="dateSelect" render="messages" />
+							<h:message for="birthday" />
+						</p:calendar>
+					</div>
+				</div>
+				<div class="p-field p-grid">
+					<label for="email" class="p-col-fixed" style="width: 100px">Email</label>
+					<div class="p-col">
+						<p:inputText id="email" value="#{usuarioBean.usuario.email}"
+							required="true" requeridMessage="O email é obrigatório"
+							validationMessage="O email está incorreto">
+
+
+							<f:ajax event="blur" render="messages" />
+						</p:inputText>
+					</div>
+				</div>
+
+				<div class="p-field p-grid">
+					<label for="senha" class="p-col-fixed" style="width: 100px">Senha</label>
+					<div class="p-col">
+						<p:password id="senha" value="#{usuarioBean.usuario.senha}"
+							required="true" requiredMessage="A senha é obrigatória"></p:password>
+
+					</div>
+				</div>
+
+				<f:facet name="footer">
+					<p:commandButton icon="pi pi-check" value="Save"
+						action="#{usuarioBean.save}">
+						<f:ajax execute="@form" render="messages" />
+					</p:commandButton>
+					<p:commandButton icon="pi pi-times" value="Cancel"
+						styleClass="ui-button-secondary" style="margin-left: .5em" />
+				</f:facet>
+			</p:card>
+		</h:form>
+
+		<p:dataTable value="#{usuarioBean.usuarios}" var="usuario">
+			<p:column headerText="Nome">
+				<h:outputText value="#{usuario.nome}" />
+			</p:column>
+			<p:column headerText="Data da nascimento">
+				<h:outputText value="#{usuario.nascimento.time}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Email">
+				<h:outputText value="#{usuario.email}" />
+			</p:column>
+
+		</p:dataTable>
+
+
+	</ui:define>
+</ui:composition>
+
+
+
+
+</html>
